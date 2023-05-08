@@ -81,7 +81,7 @@ class _BoardState extends State<Board> {
             widget.data.validMoves != null
         ? widget.data.validMoves![selected!] ?? _emptyValidMoves
         : _emptyValidMoves;
-    final premoveDests = _premoveDests ?? {};
+    final premoveDests = widget.settings.showValidMoves && _premoveDests != null ? _premoveDests : <SquareId>{};
     final shapes = widget.data.shapes ?? _emptyShapes;
     final annotations = widget.data.annotations ?? _emptyAnnotations;
     final checkSquare = widget.data.isCheck ? _getKingSquare() : null;
@@ -140,7 +140,7 @@ class _BoardState extends State<Board> {
               occupied: pieces.containsKey(dest),
             ),
           ),
-        for (final dest in premoveDests)
+        for (final dest in premoveDests!)
           PositionedSquare(
             key: ValueKey('$dest-premove-dest'),
             size: widget.squareSize,
